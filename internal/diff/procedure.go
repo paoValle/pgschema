@@ -89,8 +89,9 @@ func generateModifyProceduresSQL(diffs []*procedureDiff, targetSchema string, co
 
 		collector.collectStatements(alterContext, statements)
 
-		// Check if comment also changed alongside body changes
-		if oldProc.Comment != newProc.Comment {
+		// DROP PROCEDURE discards the comment, so re-emit it whenever the new
+		// procedure has one, even if it is unchanged (issue #677).
+		if newProc.Comment != "" {
 			generateProcedureComment(newProc, targetSchema, DiffTypeProcedure, DiffOperationAlter, collector)
 		}
 	}

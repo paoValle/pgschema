@@ -21,3 +21,19 @@ BEGIN
     COMMIT;
 END;
 $$;
+
+COMMENT ON PROCEDURE process_payment(integer, numeric, text) IS 'Marks an order as paid';
+
+DROP PROCEDURE IF EXISTS log_event(IN message text);
+
+CREATE OR REPLACE PROCEDURE log_event(
+    IN message text
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO event_log (message, logged_at) VALUES (message, NOW());
+END;
+$$;
+
+COMMENT ON PROCEDURE log_event(text) IS 'Appends a message to event_log';

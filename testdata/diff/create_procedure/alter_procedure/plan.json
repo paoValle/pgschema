@@ -3,7 +3,7 @@
   "pgschema_version": "1.13.4",
   "created_at": "1970-01-01T00:00:00Z",
   "source_fingerprint": {
-    "hash": "e4687125bf0145e37b9703d74c5cf09f0e69733284549b1f28498afd7753a102"
+    "hash": "5ed8c11f4b5d48b95679cb241196bbb42ec563d00ec1353bffaa4340c94d213b"
   },
   "groups": [
     {
@@ -19,6 +19,30 @@
           "type": "procedure",
           "operation": "create",
           "path": "public.process_payment"
+        },
+        {
+          "sql": "COMMENT ON PROCEDURE process_payment(integer, numeric, text) IS 'Marks an order as paid';",
+          "type": "procedure",
+          "operation": "create",
+          "path": "public.process_payment"
+        },
+        {
+          "sql": "DROP PROCEDURE IF EXISTS log_event(IN message text);",
+          "type": "procedure",
+          "operation": "alter",
+          "path": "public.log_event"
+        },
+        {
+          "sql": "CREATE OR REPLACE PROCEDURE log_event(\n    IN message text\n)\nLANGUAGE plpgsql\nAS $$\nBEGIN\n    INSERT INTO event_log (message, logged_at) VALUES (message, NOW());\nEND;\n$$;",
+          "type": "procedure",
+          "operation": "alter",
+          "path": "public.log_event"
+        },
+        {
+          "sql": "COMMENT ON PROCEDURE log_event(text) IS 'Appends a message to event_log';",
+          "type": "procedure",
+          "operation": "alter",
+          "path": "public.log_event"
         }
       ]
     }

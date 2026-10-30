@@ -3,3 +3,5 @@ CREATE OR REPLACE FUNCTION somefunction(
 ) RETURNS text
 LANGUAGE sql
 AS $$ SELECT param1; $$;
+
+COMMENT ON FUNCTION somefunction(text) IS 'Returns text based on param1';

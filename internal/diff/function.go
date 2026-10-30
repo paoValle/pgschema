@@ -122,8 +122,9 @@ func generateModifyFunctionsSQL(diffs []*functionDiff, targetSchema string, coll
 			}
 			collector.collectStatements(alterContext, statements)
 
-			// Check if comment also changed alongside body changes
-			if oldFunc.Comment != newFunc.Comment {
+			// DROP FUNCTION discards the comment, so re-emit it whenever the new
+			// function has one, even if it is unchanged (issue #677).
+			if newFunc.Comment != "" {
 				generateFunctionComment(newFunc, targetSchema, DiffTypeFunction, DiffOperationAlter, collector)
 			}
 		} else {

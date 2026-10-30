@@ -1,9 +1,10 @@
-Plan: 1 to modify.
+Plan: 2 to modify.
 
 Summary by type:
-  functions: 1 to modify
+  functions: 2 to modify
 
 Functions:
+  ~ somefunction
   ~ somefunction
 
 DDL to be executed:
@@ -19,3 +20,5 @@ LANGUAGE sql
 VOLATILE
 AS $$ SELECT length(param1);
 $$;
+
+COMMENT ON FUNCTION somefunction(text) IS 'Returns text based on param1';

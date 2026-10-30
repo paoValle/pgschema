@@ -3,7 +3,7 @@
   "pgschema_version": "1.13.4",
   "created_at": "1970-01-01T00:00:00Z",
   "source_fingerprint": {
-    "hash": "59a96fc0ed0cbfa32f92a9d869bbbc6e38359d50afcd5ea6eb4f388717c48135"
+    "hash": "7b9f39d2d87004e53be9715527178d0c2f2b5e92a87034c3828c87bd0a3af0ad"
   },
   "groups": [
     {
@@ -16,6 +16,12 @@
         },
         {
           "sql": "CREATE OR REPLACE FUNCTION somefunction(\n    param1 text\n)\nRETURNS integer\nLANGUAGE sql\nVOLATILE\nAS $$ SELECT length(param1);\n$$;",
+          "type": "function",
+          "operation": "alter",
+          "path": "public.somefunction"
+        },
+        {
+          "sql": "COMMENT ON FUNCTION somefunction(text) IS 'Returns text based on param1';",
           "type": "function",
           "operation": "alter",
           "path": "public.somefunction"
